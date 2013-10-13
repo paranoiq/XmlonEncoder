@@ -106,6 +106,10 @@ class XmlonEncoder
         {
             return "<$element type=\"float\">$value</$element>";
         }
+        elseif (is_null($value))
+        {
+            return "<$element nil=\"true\"></$element>";
+        }
         else
         {
             return "<$element>" . htmlspecialchars($value) . "</$element>";
@@ -174,7 +178,8 @@ class XmlonEncoder
     private function decodeElement(\SimpleXMLElement $element)
     {
         $attr = $element->attributes();
-        $type = $attr['type'] ?: ($element->children() ? 'object' : 'string');
+        $type = !empty($attr['type']) ? $attr['type']
+            : (!empty($attr['nil']) ? 'null' : ($element->children() ? 'object' : 'string'));
         switch ($type) {
             case 'object':
                 $object = array();
@@ -209,6 +214,9 @@ class XmlonEncoder
                 if ($v === 'true') return TRUE;
                 if ($v === 'false') return FALSE;
                 throw new XmlonParserException('Invalid boolean value found: ' . $v);
+                break;
+            case 'null':
+                return NULL;
                 break;
             case 'date':
             case 'datetime':

@@ -36,6 +36,9 @@ Assert::same('<data type="float">456.789</data>', $p->encode(456.789, 'data'));
 // boolean
 Assert::same('<data type="boolean">true</data>', $p->encode(TRUE, 'data'));
 
+// null
+Assert::same('<data nil="true"></data>', $p->encode(NULL, 'data'));
+
 // date
 Assert::same('<data type="date">2013-10-10</data>', $p->encode(new DateTime('2013-10-10'), 'data'));
 
@@ -48,6 +51,7 @@ $struct = (object) array(
     'intVal' => 123,
     'floatVal' => 456.789,
     'boolVal' => TRUE,
+    'nullVal' => NULL,
     'dateVal' => new DateTime('2013-10-10'),
     'timeVal' => new DateTime('2013-10-10T10:10:10+01:00'),
     'arrayVals' => ['Hello', 'World']
@@ -56,6 +60,7 @@ $doc1 = '<?xml version="1.0" encoding="UTF-8"?><data>'
     . '<intVal type="integer">123</intVal>'
     . '<floatVal type="float">456.789</floatVal>'
     . '<boolVal type="boolean">true</boolVal>'
+    . '<nullVal nil="true"></nullVal>'
     . '<dateVal type="date">2013-10-10</dateVal>'
     . '<timeVal type="datetime">2013-10-10T10:10:10+01:00</timeVal>'
     . '<arrayVals type="array"><arrayVal>Hello</arrayVal><arrayVal>World</arrayVal></arrayVals>'
@@ -64,6 +69,7 @@ $doc2 = '<?xml version="1.0" encoding="UTF-8"?><data>'
     . '<int-val type="integer">123</int-val>'
     . '<float-val type="float">456.789</float-val>'
     . '<bool-val type="boolean">true</bool-val>'
+    . '<null-val nil="true"></null-val>'
     . '<date-val type="date">2013-10-10</date-val>'
     . '<time-val type="datetime">2013-10-10T10:10:10+01:00</time-val>'
     . '<array-vals type="array"><array-val>Hello</array-val><array-val>World</array-val></array-vals>'
